@@ -14,11 +14,17 @@ from collections import defaultdict
 from PIL import Image
 
 from modules import shared  # pylint: disable=import-error
-from modules.deepbooru import re_special  # pylint: disable=import-error
 from tagger import format as tags_format  # pylint: disable=import-error
 from tagger import settings  # pylint: disable=import-error
 
 Its = settings.InterrogatorSettings
+
+# A1111 has modules.deepbooru.re_special, but Forge variants may not.
+try:
+    from modules.deepbooru import re_special  # pylint: disable=import-error
+except ModuleNotFoundError:
+    # Match DeepDanbooru escape behavior used by tagger_escape.
+    re_special = re_comp(r'([\\()])')
 
 # PIL.Image.registered_extensions() returns only PNG if you call early
 supported_extensions = {

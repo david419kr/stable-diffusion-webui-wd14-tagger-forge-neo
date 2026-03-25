@@ -5,7 +5,17 @@ from modules.api import models as sd_models  # pylint: disable=E0401
 from pydantic import BaseModel, Field
 
 
-class TaggerInterrogateRequest(sd_models.InterrogateRequest):
+try:
+    _BaseInterrogateRequest = sd_models.InterrogateRequest  # A1111
+except AttributeError:
+    class _BaseInterrogateRequest(BaseModel):  # Forge compatibility fallback
+        image: str = Field(
+            title='Image',
+            description='Base64 encoded image input.',
+        )
+
+
+class TaggerInterrogateRequest(_BaseInterrogateRequest):
     """Interrogate request model"""
     model: str = Field(
         title='Model',

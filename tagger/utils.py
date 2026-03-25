@@ -102,7 +102,7 @@ def refresh_interrogators() -> List[str]:
             continue
 
         def tag_select_csvs_up_front(k):
-            sum(-1 if t in k.name.lower() else 1 for t in ["tag", "select"])
+            return sum(-1 if t in k.name.lower() else 1 for t in ["tag", "select"])
 
         csv.sort(key=tag_select_csvs_up_front)
         tags_path = Path(path, csv[0])
@@ -118,8 +118,16 @@ def refresh_interrogators() -> List[str]:
                 interrogators[path.name] = WaifuDiffusionInterrogator(
                     'Z3D-E621-Convnext', is_hf=False)
             else:
-                raise NotImplementedError(f"Add {path.name} resolution similar"
-                                          "to above here")
+                # Generic local ONNX + CSV support (Forge/A1111 compatibility).
+                interrogators[path.name] = WaifuDiffusionInterrogator(
+                    path.name,
+                    repo_id=path.name,
+                    is_hf=False
+                )
+                print(
+                    f"Registered local ONNX tagger '{path.name}' "
+                    f"from {path}"
+                )
 
         interrogators[path.name].local_model = str(local_path)
         interrogators[path.name].local_tags = str(tags_path)
