@@ -258,8 +258,8 @@ def on_ui_tabs():
                         )
 
                     with gr.Row(variant='compact'):
-                        def refresh():
-                            utils.refresh_interrogators()
+                        def refresh(force=False):
+                            utils.refresh_interrogators(force=force)
                             return sorted(x.name for x in utils.interrogators
                                                                .values())
                         interrogator_names = refresh()
@@ -277,7 +277,7 @@ def on_ui_tabs():
                         ui.create_refresh_button(
                             interrogator,
                             lambda: None,
-                            lambda: {'choices': refresh()},
+                            lambda: {'choices': refresh(force=True)},
                             'refresh_interrogator'
                         )
 

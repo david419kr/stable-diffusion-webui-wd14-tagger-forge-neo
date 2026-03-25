@@ -59,9 +59,16 @@ interrogators: Dict[str, Interrogator] = {
     ),
 }
 
+_interrogators_scanned_once = False
 
-def refresh_interrogators() -> List[str]:
+
+def refresh_interrogators(force: bool = False) -> List[str]:
     """Refreshes the interrogators list"""
+    global _interrogators_scanned_once
+
+    if _interrogators_scanned_once and not force:
+        return sorted(interrogators.keys())
+
     # load deepdanbooru project
     ddp_path = shared.cmd_opts.deepdanbooru_projects_path
     if ddp_path is None:
@@ -132,6 +139,7 @@ def refresh_interrogators() -> List[str]:
         interrogators[path.name].local_model = str(local_path)
         interrogators[path.name].local_tags = str(tags_path)
 
+    _interrogators_scanned_once = True
     return sorted(interrogators.keys())
 
 
