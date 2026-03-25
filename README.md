@@ -1,3 +1,6 @@
+> This is a Forge Neo-compatible fork, with added support for easier custom model registration.
+> Quick custom ONNX add: place one `.onnx` + one `.csv` in `models/TaggerOnnx/<your_model_folder>/`, then restart WebUI (or refresh *Interrogator*).
+
 Tagger for [Automatic1111's WebUI](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
 ---
 Interrogate booru style tags for single or multiple image files using various models, such as DeepDanbooru.
@@ -61,3 +64,4 @@ Artwork made by [hecattaart](https://vk.com/hecattaart?w=wall-89063929_3767)
 ## Copyright
 
 Public domain, except borrowed parts (e.g. `dbimutils.py`)
+
