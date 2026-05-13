@@ -13,7 +13,8 @@ except ImportError:
 from html import escape as html_esc
 
 from modules import ui  # pylint: disable=import-error
-from modules import generation_parameters_copypaste as parameters_copypaste  # pylint: disable=import-error # noqa
+
+parameters_copypaste = ui.parameters_copypaste
 
 try:
     from modules.call_queue import wrap_gradio_gpu_call
